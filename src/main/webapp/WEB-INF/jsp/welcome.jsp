@@ -1,13 +1,10 @@
-<html>
+<%@ include file="common/header.jspf"%>
+<%@ include file="common/navigation.jspf"%>
 
-<head>
-<title>First Web Application</title>
-</head>
-
-<body>
+<div class="container">
 	Welcome ${name}!!!,  your password is: ${password};
 	<br/>
 	<a href="list-todos">Click here<a> to manage your TODOs 
-</body>
+</div>
 
-</html>
+<%@ include file="common/footer.jspf"%>

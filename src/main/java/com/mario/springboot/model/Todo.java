@@ -2,6 +2,8 @@ package com.mario.springboot.model;
 
 import java.util.Date;
 
+import javax.validation.constraints.Size;
+
 public class Todo {
 
 	private int id;
@@ -10,6 +12,10 @@ public class Todo {
 	private Date targetDate;
 	private boolean isDone;
 
+	public Todo(){
+		
+	}
+	
 	public Todo(int id, String user, String desc, Date targetDate, boolean isDone) {
 		super();
 		this.id = id;
@@ -35,6 +41,7 @@ public class Todo {
 		this.user = user;
 	}
 
+	@Size(min = 10, message = "Enter at least 10 Characters.")
 	public String getDesc() {
 		return desc;
 	}
@@ -51,11 +58,11 @@ public class Todo {
 		this.targetDate = targetDate;
 	}
 
-	public boolean isDone() {
+	public boolean getIsDone() {
 		return isDone;
 	}
 
-	public void setDone(boolean isDone) {
+	public void setIsDone(boolean isDone) {
 		this.isDone = isDone;
 	}
 
