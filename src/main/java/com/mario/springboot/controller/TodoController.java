@@ -15,27 +15,31 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.mario.springboot.model.Todo;
+import com.mario.springboot.security.UserDetailComponent;
 import com.mario.springboot.services.TodoService;
 
 @Controller
-@SessionAttributes("name")
 public class TodoController {
 
+
+	@Autowired
+	UserDetailComponent userDetailComponent;
+	
 	@Autowired
 	TodoService todoServices;
 	
 	@RequestMapping(value="/list-todos", method = RequestMethod.GET)
 	public String showTodoPage(ModelMap model){
-		model.put("todos", todoServices.retrieveTodos(String.valueOf(model.get("name"))));
+		model.put("todos", todoServices.retrieveTodos(userDetailComponent.getLoggedInUserName()));
 		return "list-todos";
 	}
+
 	
 	@RequestMapping(value="/add-todo", method = RequestMethod.GET)
 	public String showAddTodoPage(ModelMap model){
-		model.put("todo", new Todo(0, String.valueOf( model.get("name")), null, new Date(), false));
+		model.put("todo", new Todo(0, userDetailComponent.getLoggedInUserName(), null, new Date(), false));
 		return "todo";
 	}
 	
@@ -44,7 +48,7 @@ public class TodoController {
 		if(result.hasErrors()){
 			return "todo";
 		}
-		todoServices.addTodo(String.valueOf(model.get("name")), todo.getDesc(), new Date(), false);
+		todoServices.addTodo(userDetailComponent.getLoggedInUserName(), todo.getDesc(), new Date(), false);
 		return "redirect:/list-todos";
 	}
 	
@@ -66,7 +70,7 @@ public class TodoController {
 		if(result.hasErrors()){
 			return "todo";
 		}
-		todo.setUser(String.valueOf(map.get("name")));
+		todo.setUser(userDetailComponent.getLoggedInUserName());
 		todoServices.updateTodo(todo);
 		return "redirect:/list-todos";
 	}
@@ -77,4 +81,6 @@ public class TodoController {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
 	}
+
+	
 }
