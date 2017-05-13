@@ -4,12 +4,21 @@ import java.util.Date;
 
 import javax.validation.constraints.Size;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel
 public class Todo {
 
+	@ApiModelProperty(notes = "The Todo generated id")
 	private int id;
+	@ApiModelProperty(notes = "The Todo user name")
 	private String user;
+	@ApiModelProperty(notes = "The Todo description")
 	private String desc;
+	@ApiModelProperty(notes = "The Todo target date")
 	private Date targetDate;
+	@ApiModelProperty(notes = "The Todo is done. Default is false")
 	private boolean isDone;
 
 	public Todo(){

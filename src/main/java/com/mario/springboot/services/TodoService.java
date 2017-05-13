@@ -21,6 +21,10 @@ public class TodoService {
 		todos.add(new Todo(3, "guedim", "Learn Hibernate", new Date(), false));
 	}
 
+	public List<Todo> retrieveAllTodos() {
+		return todos;
+	}
+	
 	public List<Todo> retrieveTodos(String user) {
 		List<Todo> filteredTodos = new ArrayList<Todo>();
 		for (Todo todo : todos) {
@@ -30,9 +34,13 @@ public class TodoService {
 		}
 		return filteredTodos;
 	}
-
+	
 	public void addTodo(String name, String desc, Date targetDate, boolean isDone) {
 		todos.add(new Todo(++todoCount, name, desc, targetDate, isDone));
+	}
+	
+	public void addTodo(Todo todo) {
+		todos.add(todo);
 	}
 
 	public void deleteTodo(int id) {
